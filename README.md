@@ -1,75 +1,238 @@
-Create a React component that visualizes a LangGraph workflow execution stream in real-time.
+Multi-Agent Blog Writer — LangGraph Workflow
 
-## Data Format
-The backend sends Server-Sent Events (SSE) with this structure:
+A real-time workflow execution dashboard for visualizing LangGraph multi-agent pipelines using React, TypeScript, Server-Sent Events (SSE), and React Flow.
+
+This component streams live node execution updates from the backend and renders:
+
+* Real-time execution progress
+* Node status cards
+* Worker tracking
+* Timeline visualization
+* Graph execution flow
+* Metrics dashboard
+* Output previews
+* CSV export
+* WebSocket fallback support
+* Dark/light mode
+
+⸻
+
+Features
+
+Real-Time Streaming
+
+* Live updates using Server-Sent Events (SSE)
+* Automatic WebSocket fallback
+* Real-time node execution tracking
+
+⸻
+
+Execution Visualization
+
+Workflow Progress Bar
+
+* Shows completed vs total nodes
+* Displays total elapsed execution time
+* Color-coded execution states:
+    * 🔵 Running
+    * 🟢 Completed
+
+⸻
+
+Node Status Cards
+
+Each node displays:
+
+* Node name
+* Execution status
+* Start time
+* End time
+* Duration
+* Loading spinner while running
+* Expandable output preview
+
+⸻
+
+Worker Tracking
+
+Special worker monitoring section:
+
+3/9 workers active
+
+Displays:
+
+Worker #1 → Research AI Trends
+Worker #2 → Gather Sources
+Worker #3 → Draft Introduction
+
+⸻
+
+Output Preview
+
+Collapsible execution outputs with syntax highlighting.
+
+Plan Output
+
+{
+  "blog_title": "Future of AI Agents",
+  "tasks": 9
+}
+
+Sections Output
+
+{
+  "sections": [
+    {
+      "title": "Introduction",
+      "word_count": 450
+    }
+  ]
+}
+
+Evidence Output
+
+{
+  "evidence_items": 24
+}
+
+⸻
+
+Timeline View
+
+Vertical execution timeline showing:
+
+* Execution order
+* Node transitions
+* Timestamps
+* Active node highlighting
+* Connected workflow visualization
+
+⸻
+
+Graph Visualization
+
+Interactive graph using React Flow.
+
+Features:
+
+* Node connections
+* Execution state colors
+* Animated edges
+* Zoom/pan controls
+* Live graph updates
+
+⸻
+
+Metrics Dashboard
+
+Top-level statistics panel:
+
+Metric	Description
+Total Nodes	Total workflow nodes
+Completed Nodes	Finished nodes
+Running Nodes	Currently active nodes
+Evidence Items	Collected evidence
+Sections Generated	Generated sections
+Total Duration	Total execution time
+Avg Duration	Average node runtime
+Slowest Node	Longest-running task
+
+⸻
+
+Search & Filtering
+
+* Search nodes/workers
+* Filter by:
+    * Running
+    * Completed
+    * Workers only
+
+⸻
+
+Dark / Light Mode
+
+Theme toggle with persistent preference.
+
+⸻
+
+Sound Notifications
+
+Optional audio alerts for:
+
+* Workflow completed
+* Critical node completion
+* Worker completion
+
+⸻
+
+Minimized Dashboard Mode
+
+Compact embeddable version displaying only:
+
+* Progress
+* Running status
+* Metrics summary
+
+Useful for admin dashboards.
+
+⸻
+
+CSV Export
+
+Export execution history for analytics.
+
+node_name,status,duration
+router,completed,1.2
+research,completed,4.9
+
+⸻
+
+Tech Stack
+
+Technology	Purpose
+React	UI
+TypeScript	Type Safety
+TailwindCSS	Styling
+React Flow	Graph Visualization
+react-syntax-highlighter	JSON highlighting
+Lucide React	Icons
+SSE	Real-time streaming
+WebSocket	Fallback streaming
+Framer Motion	Animations
+
+⸻
+
+Installation
+
+Install dependencies:
+
+npm install reactflow react-syntax-highlighter lucide-react framer-motion
+
+or
+
+yarn add reactflow react-syntax-highlighter lucide-react framer-motion
+
+⸻
+
+Backend SSE Format
+
+The backend streams events in this format:
 
 event: message
-data: {"node_name": "router", "status": "running", "started_at": "2026-05-09 18:46:00.236036", "message": "router started"}
+data: {
+  "node_name": "router",
+  "status": "running",
+  "started_at": "2026-05-09 18:46:00.236036",
+  "message": "router started"
+}
 
+⸻
 
-## Message Schema
-Each message contains:
-- `node_name`: string (e.g., "router", "research", "worker", "LangGraph")
-- `status`: "running" | "completed"
-- `started_at`: ISO timestamp
-- `ended_at`: ISO timestamp (only when completed)
-- `duration`: number in seconds (only when completed)
-- `message`: string description
-- `output`: object (only when completed, contains task results)
+Message Schema
 
-## UI Requirements
-
-### 1. **Workflow Progress Bar**
-- Show overall progress: X/Y nodes completed
-- Display total elapsed time
-- Color-coded status: blue (running), green (completed)
-
-### 2. **Node Status Cards**
-Display each node as a card with:
-- Node name as header
-- Status badge (running/completed with icon)
-- Start time
-- Duration (if completed)
-- Progress spinner (if running)
-
-### 3. **Worker Tracking Section**
-- Show "Worker" nodes separately
-- Display: "Worker #N: [task_title]"
-- Show how many workers are active vs total
-- Example: "3/9 workers active"
-
-### 4. **Output Preview**
-When a node completes with output:
-- Show collapsible section with output data
-- For `plan`: display `blog_title` and task count
-- For `sections`: show section titles and word counts
-- For `evidence`: show evidence item count
-- Use syntax highlighting for JSON
-
-### 5. **Timeline View**
-- Vertical timeline showing execution order
-- Each node as a timeline item with:
-  - Connection lines between nodes
-  - Timestamp on the left
-  - Node details on the right
-  - Highlight currently running nodes
-
-### 6. **Key Metrics Dashboard**
-Top section showing:
-- Total nodes: X
-- Completed: X
-- Running: X
-- Evidence items collected: X
-- Sections generated: X
-- Total duration: X seconds
-
-## Technical Implementation
-
-### State Management
-```typescript
 interface NodeExecution {
   node_name: string;
-  status: 'running' | 'completed';
+  status: "running" | "completed";
   started_at: string;
   ended_at?: string;
   duration?: number;
@@ -77,106 +240,236 @@ interface NodeExecution {
   output?: any;
 }
 
+⸻
+
+Folder Structure
+
+src/
+├── components/
+│   ├── WorkflowVisualizer.tsx
+│   ├── ProgressBar.tsx
+│   ├── NodeCard.tsx
+│   ├── WorkerTracker.tsx
+│   ├── Timeline.tsx
+│   ├── MetricsDashboard.tsx
+│   ├── OutputPreview.tsx
+│   ├── GraphView.tsx
+│   └── MinimizedView.tsx
+│
+├── hooks/
+│   ├── useWorkflowStream.ts
+│   ├── useWebSocketFallback.ts
+│   └── useTheme.ts
+│
+├── utils/
+│   ├── metrics.ts
+│   ├── exportCsv.ts
+│   └── graph.ts
+│
+└── types/
+    └── workflow.ts
+
+⸻
+
+Custom SSE Hook
+
+useWorkflowStream.ts
+
+import { useEffect } from "react";
+export const useWorkflowStream = (
+  url: string,
+  onMessage: (data: any) => void
+) => {
+  useEffect(() => {
+    const eventSource = new EventSource(url);
+    eventSource.onmessage = (event) => {
+      const parsed = JSON.parse(event.data);
+      onMessage(parsed);
+    };
+    eventSource.onerror = () => {
+      console.error("SSE connection failed");
+      eventSource.close();
+    };
+    return () => {
+      eventSource.close();
+    };
+  }, [url, onMessage]);
+};
+
+⸻
+
+WebSocket Fallback
+
+const socket = new WebSocket("ws://localhost:8000/ws");
+socket.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+};
+
+⸻
+
+React Flow Graph Example
+
+<ReactFlow
+  nodes={nodes}
+  edges={edges}
+  fitView
+>
+  <MiniMap />
+  <Controls />
+  <Background />
+</ReactFlow>
+
+⸻
+
+State Management
+
 const [executions, setExecutions] = useState<NodeExecution[]>([]);
 const [metrics, setMetrics] = useState({
   total: 0,
   completed: 0,
   running: 0,
-  workers: { active: 0, total: 0 }
+  workers: {
+    active: 0,
+    total: 0,
+  },
 });
 
+⸻
 
-## Message Schema
-Each message contains:
-- `node_name`: string (e.g., "router", "research", "worker", "LangGraph")
-- `status`: "running" | "completed"
-- `started_at`: ISO timestamp
-- `ended_at`: ISO timestamp (only when completed)
-- `duration`: number in seconds (only when completed)
-- `message`: string description
-- `output`: object (only when completed, contains task results)
+Metrics Calculation Example
 
-## UI Requirements
+const completed = executions.filter(
+  (e) => e.status === "completed"
+).length;
+const running = executions.filter(
+  (e) => e.status === "running"
+).length;
 
-### 1. **Workflow Progress Bar**
-- Show overall progress: X/Y nodes completed
-- Display total elapsed time
-- Color-coded status: blue (running), green (completed)
+⸻
 
-### 2. **Node Status Cards**
-Display each node as a card with:
-- Node name as header
-- Status badge (running/completed with icon)
-- Start time
-- Duration (if completed)
-- Progress spinner (if running)
+Performance Optimizations
 
-### 3. **Worker Tracking Section**
-- Show "Worker" nodes separately
-- Display: "Worker #N: [task_title]"
-- Show how many workers are active vs total
-- Example: "3/9 workers active"
+* React.memo
+* useMemo
+* useCallback
+* Virtualized lists for large timelines
+* Lazy-loaded graph visualization
 
-### 4. **Output Preview**
-When a node completes with output:
-- Show collapsible section with output data
-- For `plan`: display `blog_title` and task count
-- For `sections`: show section titles and word counts
-- For `evidence`: show evidence item count
-- Use syntax highlighting for JSON
+⸻
 
-### 5. **Timeline View**
-- Vertical timeline showing execution order
-- Each node as a timeline item with:
-  - Connection lines between nodes
-  - Timestamp on the left
-  - Node details on the right
-  - Highlight currently running nodes
+Error Handling
 
-### 6. **Key Metrics Dashboard**
-Top section showing:
-- Total nodes: X
-- Completed: X
-- Running: X
-- Evidence items collected: X
-- Sections generated: X
-- Total duration: X seconds
+Includes:
 
-## Technical Implementation
+* Error boundaries
+* SSE reconnect strategy
+* WebSocket reconnect
+* Graceful fallback UI
 
-### State Management
-```typescript
-interface NodeExecution {
-  node_name: string;
-  status: 'running' | 'completed';
-  started_at: string;
-  ended_at?: string;
-  duration?: number;
-  message: string;
-  output?: any;
-}
+⸻
 
-const [executions, setExecutions] = useState<NodeExecution[]>([]);
-const [metrics, setMetrics] = useState({
-  total: 0,
-  completed: 0,
-  running: 0,
-  workers: { active: 0, total: 0 }
-});
+Recommended Enhancements
 
-ENHANCEMENT REQUESTS:
+Future Improvements
 
-1. **Add a graph visualization** using React Flow or D3.js showing node connections
-2. **Include search/filter** to find specific nodes or workers
-3. **Add statistics** like average task duration, slowest node, etc.
-4. **Implement dark/light mode toggle**
-5. **Add sound notifications** when key nodes complete (optional, user-controlled)
-6. **Create a minimized view** showing just key metrics for embedding in dashboards
-7. **Add export to CSV** for execution data analysis
-8. **Implement WebSocket fallback** if SSE is not supported
+* Redis-backed event replay
+* Workflow playback mode
+* Agent grouping
+* Multi-session monitoring
+* AI-generated execution summaries
+* Heatmap performance visualization
+* OpenTelemetry integration
 
-Use modern React patterns:
-- Custom hooks for SSE connection
-- Memoization for performance
-- TypeScript for type safety
-- Error boundaries for robustness @Frontend/src/app/blog/page.tsx:1-597 
+⸻
+
+Example Usage
+
+<WorkflowVisualizer
+  sseUrl="http://localhost:8000/stream"
+/>
+
+⸻
+
+Environment Variables
+
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_WS_URL=ws://localhost:8000/ws
+
+⸻
+
+Screens Overview
+
+Main Dashboard
+
+* Metrics
+* Progress
+* Graph
+* Timeline
+* Workers
+
+⸻
+
+Embedded Mini View
+
+Compact mode for dashboards.
+
+<MinimizedWorkflowView />
+
+⸻
+
+Accessibility
+
+* Keyboard navigation
+* Screen reader labels
+* Reduced motion support
+* High contrast themes
+
+⸻
+
+Recommended Libraries
+
+Library	Use
+React Flow	Graph Visualization
+Framer Motion	Animations
+Zustand	Optional global state
+date-fns	Time formatting
+react-window	Timeline virtualization
+
+⸻
+
+Example Workflow
+
+Router
+   ↓
+Planner
+   ↓
+Workers (parallel)
+   ↓
+Evidence Collection
+   ↓
+Section Generation
+   ↓
+Final Assembly
+
+⸻
+
+Development Notes
+
+This visualizer is designed specifically for:
+
+* LangGraph
+* Multi-agent orchestration systems
+* AI pipeline execution monitoring
+* Real-time workflow analytics
+
+⸻
+
+License
+
+MIT License
+
+⸻
+
+Author
+
+Built for real-time LangGraph execution monitoring in the Multi-Agent Blog Writer project.

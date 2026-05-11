@@ -1,4 +1,4 @@
-# Multi-Agent Blog Writer — LangGraph Workflow Visualizer
+# Multi-Agent Blog Writer — LangGraph Workflow 
 
 A real-time workflow execution dashboard for visualizing LangGraph multi-agent pipelines using **React**, **TypeScript**, **Server-Sent Events (SSE)**, and **React Flow**.
 

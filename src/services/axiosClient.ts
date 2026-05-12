@@ -3,15 +3,11 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-} from "axios";
+} from "axios"; 
 import toast from "react-hot-toast";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_DEVELOPMENT_ENV === "development"
-    ? "/api/v1"
-    : process.env.NEXT_PUBLIC_API_BASE_URL;
-
-    
+const BASE_URL =process.env.NEXT_PUBLIC_API_BASE_URL+"/api/v1";
+  
 const axiosClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,

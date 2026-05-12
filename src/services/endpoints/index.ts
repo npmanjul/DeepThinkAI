@@ -15,6 +15,9 @@ const ENDPOINTS={
         UPDATE_PUBLISHED:"/blog/update-published",
         GET_BLOG:"/blog/get-blog",
         DELETE_BLOG:"/blog/delete-blog"
+    },
+    TEST:{
+        TEST:"/test/"
     }
 }
 

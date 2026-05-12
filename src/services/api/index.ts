@@ -21,4 +21,8 @@ const BlogAPI={
     deleteBlog:(blogSlug:string)=> axiosClient.delete(`${ENDPOINTS.BLOG.DELETE_BLOG}?blog_slug=${blogSlug}`),
 }
 
-export  {AuthAPI,BlogAPI}
+const TestAPI={
+    test:()=> axiosClient.get(ENDPOINTS.TEST.TEST)
+}
+
+export  {AuthAPI,BlogAPI,TestAPI}

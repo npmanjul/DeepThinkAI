@@ -6,7 +6,7 @@ import axios, {
 } from "axios"; 
 import toast from "react-hot-toast";
 
-const BASE_URL =process.env.NEXT_PUBLIC_API_BASE_URL+"/api/v1";
+const BASE_URL ="https://api.deepthinkai.anjul.cloud"+"/api/v1";
   
 const axiosClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,

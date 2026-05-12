@@ -124,7 +124,7 @@ const BlogStreamPage = () => {
     setHistory((prev) => [newRun, ...prev]);
 
     // Use relative path for SSE (goes through Next.js proxy, sends cookies automatically)
-    const sseUrl = `/api/v1${ENDPOINTS.BLOG.STREAM}?topic=${encodeURIComponent(topic)}`;
+    const sseUrl = `https://api.deepthinkai.anjul.cloud/api/v1${ENDPOINTS.BLOG.STREAM}?topic=${encodeURIComponent(topic)}`;
 
     const eventSource = new EventSource(sseUrl);
     eventSourceRef.current = eventSource;

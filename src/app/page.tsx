@@ -661,13 +661,13 @@ const DeepThinkAIHome = () => {
       {/* Footer */}
       <footer className="border-t border-zinc-900 pt-4 sm:pt-6 pb-8 sm:pb-10 md:pb-12 px-3 sm:px-6 bg-black overflow-hidden">
         {/* Large Brand Name */}
-        <div className="flex items-center justify-center w-full overflow-hidden mb-4 sm:mb-6 md:mb-0">
-          <span className="font-bold text-[clamp(2rem,15vw,220px)] leading-none bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent whitespace-nowrap select-none">
+        <div className="flex items-center justify-center w-full overflow-hidden mb-4 sm:mb-6 md:mb-12">
+          <span className="font-bold text-[clamp(2rem,15vw,220px)] leading-none bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent whitespace-nowrap select-none py-4">
             DeepThinkAI
           </span>
         </div>
 
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 md:gap-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4 md:gap-6">
           <div className="flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-8 text-xs sm:text-sm text-zinc-600">
             {["Documentation", "API", "GitHub", "Twitter"].map((link) => (
               <a

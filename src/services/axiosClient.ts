@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_DEVELOPMENT_ENV === "development"
-    ? "/api/v1" // use relative path in dev so Next.js proxy can forward requests (same-origin)
+    ? "/api/v1"
     : process.env.NEXT_PUBLIC_API_BASE_URL;
 
     
